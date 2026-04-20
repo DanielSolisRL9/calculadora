@@ -1,13 +1,20 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CalculadoraContext from '../CalculadoraContext';
 
 function Pantalla(){
-
-    const {valorPantalla} = useContext(CalculadoraContext);
+    const [enfocado, setEnfocado] = useState(false);
+    const {valorPantalla, pantallaRef} = useContext(CalculadoraContext);
 
     return(
-        <div style={styles.Pantalla}>{valorPantalla}</div>
+        <input 
+        style={enfocado ? styles.enfocado : styles.desenfocado} 
+        value={valorPantalla} 
+        ref={pantallaRef} 
+        readOnly 
+        onFocus={() => setEnfocado(true)} 
+        onBlur={() => setEnfocado(false)} 
+        />
     )
 
 }
@@ -19,6 +26,23 @@ function Pantalla(){
             marginBottom: '10px',
             textAlign: 'right',
             fontSize: '2rem',
+        },
+
+        enfocado: {
+            border: '5px solid #007BFF',
+            backgroundColor: '#2c7d46',
+            padding: '50px 30px',
+            marginBottom: '10px',
+            textAlign: 'right',
+            fontSize: '7rem',
+        },
+
+        desenfocado: {
+            border: '5px solid #ddd',
+            padding: '50px 30px',
+            marginBottom: '10px',
+            textAlign: 'right',
+            fontSize: '7rem',
         }
     };
 
