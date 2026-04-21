@@ -17,12 +17,12 @@ function calculadoraReducer(estado, accion) {
             } else {
                  //setValorPantalla((previo) => (previo === '0' ? tecla : previo + tecla));
                  return{
+
                     ...estado,
                     valorPantalla: (estado.valorPantalla === '0' ? accion.numero : estado.valorPantalla + accion.numero),
                  }
             }
         }
-            break;
         case "PRESIONAR_OPERADOR": {}
             break;
         case "CALCULAR_RESULTADO": {}
