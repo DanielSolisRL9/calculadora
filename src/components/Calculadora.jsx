@@ -1,36 +1,36 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useReducer } from 'react';
 import Pantalla from './pantalla';
 import Teclado from './Teclado';
 import CalculadoraContext from '../CalculadoraContext';
+import { estadoInicial, calculadoraReducer } from '../CalculadoraReducer';
 
 function Calculadora() {
+
+  const [estado, dispatch] = useReducer(calculadoraReducer, estadoInicial);
   const valorInicialPantalla = localStorage.getItem('ultimoValorPantalla') || '0';
-  const [valorPantalla, setValorPantalla] = useState(valorInicialPantalla);
+  //const [valorPantalla, setValorPantalla] = useState(valorInicialPantalla);
   //const [valorPrevio, setValorPrevio] = useState(0);
-  const valorPrevio = useRef(0);
+  //const valorPrevio = useRef(0);
   //const [operador, setOperador] = useState(null);
-  const operador = useRef(null);
+  //const operador = useRef(null);
   //const [esperandoOperando, setEsperandoOperando] = useState(false);
-  const esperandoOperando = useRef(false);
+  //const esperandoOperando = useRef(false);
   const pantallaRef = useRef(null);
 
   useEffect(() => {
-    document.title = `Calculadora: ${valorPantalla}`;
+    document.title = `Calculadora: ${estado.valorPantalla}`;
   });
 
   useEffect(() => {
-    localStorage.setItem('ultimoValorPantalla', valorPantalla);
-  }, [valorPantalla]);
+    localStorage.setItem('ultimoValorPantalla',estado.valorPantalla);
+  }, [estado.valorPantalla]);
 
   const presionarTecla = (tecla) => {
     if ('0123456789'.includes(tecla)) {
       pantallaRef.current?.blur();
-      if (esperandoOperando.current) {
-        setValorPantalla(tecla);
-        esperandoOperando.current = false;
-      } else {
-        setValorPantalla((previo) => (previo === '0' ? tecla : previo + tecla));
-      }
+
+
+
     } else if ('+-*/'.includes(tecla)) {
       pantallaRef.current?.blur();
       valorPrevio.current = valorPantalla;
