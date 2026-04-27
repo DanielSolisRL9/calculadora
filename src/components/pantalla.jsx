@@ -4,12 +4,12 @@ import CalculadoraContext from '../CalculadoraContext';
 
 function Pantalla(){
     const [enfocado, setEnfocado] = useState(false);
-    const {valorPantalla, pantallaRef} = useContext(CalculadoraContext);
+    const {estado, pantallaRef} = useContext(CalculadoraContext);
 
     return(
         <input 
         style={enfocado ? styles.enfocado : styles.desenfocado} 
-        value={valorPantalla} 
+        value={estado} 
         ref={pantallaRef} 
         readOnly 
         onFocus={() => setEnfocado(true)} 

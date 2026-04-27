@@ -6,7 +6,7 @@ const estadoInicial = {
 }
 
 function calculadoraReducer(estado, accion) {
-    switch (accion) {
+    switch (accion.tipo) {
         case "PRESIONAR_NUMERO": {
             if (estado.esperandoOperando) {
                return {
@@ -23,14 +23,32 @@ function calculadoraReducer(estado, accion) {
                  }
             }
         }
-        case "PRESIONAR_OPERADOR": {}
-            break;
-        case "CALCULAR_RESULTADO": {}
-            break;
-        case "LIMPIAR": {}
-            break;
+        case "PRESIONAR_OPERADOR": {
+            return{
+                ...estado,
+                valorPrevio : Number.parseInt(estado.valorPantalla),
+                operador : accion.operador,
+                esperandoOperando : true,
+            }
+        }
+        case "CALCULAR_RESULTADO": {
+            if (!estado.operador || estado.esperandoOperando) return estado;
+            const nuevoValor = eval(`${estado.valorPrevio} ${estado.operador} ${estado.valorPantalla}`);
+            return{
+                ...estado,
+                valorPantalla: String(nuevoValor),
+                operador: null,
+                esperandoOperando: false,
+            }
+
+       }
+        case "LIMPIAR": {
+            return{
+                ...estadoInicial
+            }
+        }
         default:
-            break;
+            return estado;
     }
 }
 
